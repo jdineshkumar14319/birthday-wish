@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinematic Surprise 🎬</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Scene */
+.scene {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: fadeIn 2s;
+}
+
+.active { display: flex; }
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Text */
+h1 {
+    font-size: 28px;
+    letter-spacing: 2px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 30px #ff4081; }
+}
+
+p {
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+/* Button */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+/* Typewriter */
+.type {
+    border-right: 2px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 4s steps(40), blink 0.7s infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink {
+    50% { border-color: transparent }
+}
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: yellow;
+    animation: fall 3s linear infinite;
+}
+@keyframes fall {
+    100% { transform: translateY(100vh); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ✅ LOCAL MUSIC (IMPORTANT) -->
+<audio id="music" preload="auto" loop>
+    <source src="song.mp3" type="audio/mp3">
+</audio>
+
+<!-- Scene 1 -->
+<div id="scene1" class="scene active">
+    <h1>🎬 A Special Moment...</h1>
+    <button onclick="startExperience()">Start ▶️</button>
+</div>
+
+<!-- Scene 2 -->
+<div id="scene2" class="scene">
+    <p class="type">In our life… some people are truly special 💫</p>
+    <button onclick="nextScene(3)">Next ➡️</button>
+</div>
+
+<!-- Scene 3 -->
+<div id="scene3" class="scene">
+    <p class="type">They bring happiness to everyone around them 😊</p>
+    <button onclick="nextScene(4)">Next ➡️</button>
+</div>
+
+<!-- Scene 4 -->
+<div id="scene4" class="scene">
+    <h1>Happy Birthday Jyoti Pinni 💐</h1>
+    <button onclick="nextScene(5)">Continue 🎁</button>
+</div>
+
+<!-- Scene 5 -->
+<div id="scene5" class="scene">
+    <p class="type">Mee navvu chusthe maa intlo andariki santosham vastundi 💖</p>
+    <button onclick="nextScene(6)">Next ➡️</button>
+</div>
+
+<!-- Scene 6 -->
+<div id="scene6" class="scene">
+    <p class="type">Meeru maa family ki chala special 🙏</p>
+    <button onclick="nextScene(7)">Final 🎉</button>
+</div>
+
+<!-- Final -->
+<div id="scene7" class="scene">
+    <h1>🎂 Happy Birthday 🎂</h1>
+    <p>Stay happy & healthy always 💐</p>
+    <p>With love,<br>Dinesh 💙</p>
+</div>
+
+<script>
+const music = document.getElementById("music");
+
+// 🔥 Start button controls music (important fix)
+function startExperience(){
+    showScene(2);
+
+    music.currentTime = 0;
+    music.play().then(()=>{
+        console.log("Music playing");
+    }).catch(err=>{
+        console.log("Error:", err);
+    });
+}
+
+// Scene change
+function nextScene(num) {
+    showScene(num);
+
+    if(num === 7) confetti();
+}
+
+// Show scene
+function showScene(num){
+    document.querySelectorAll(".scene").forEach(s => s.classList.remove("active"));
+    document.getElementById("scene" + num).classList.add("active");
+}
+
+// Confetti
+function confetti() {
+    setInterval(() => {
+        let c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random()*100 + "vw";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }, 100);
+}
+</script>
+
+</body>
+</html>
